@@ -1,1 +1,8 @@
 # RAG_App
+
+ src contains all files has logic for the app  
+
+mvc: model, views, controllers
+model: data related tasks
+controlleres: logic related tasks
+
