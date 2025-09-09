@@ -1,2 +1,5 @@
-form .BaseController import BaseController
-from .
+from .BaseController import BaseController
+
+class ProcessController(BaseController):
+    def __init__(self):
+        super().__init__()

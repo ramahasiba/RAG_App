@@ -6,3 +6,4 @@ mvc: model, views, controllers
 model: data related tasks
 controlleres: logic related tasks
 
+uvicorn main:app --reload
