@@ -35,7 +35,7 @@ class ProcessController(BaseController):
                              chunk_size: int=512, overlap_size: int=50):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size, 
-            overlap_size=overlap_size,
+            chunk_overlap=overlap_size,
             length_function=len, # len can be replaced with a lmabda function
         )
 
