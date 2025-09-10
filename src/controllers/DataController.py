@@ -22,27 +22,30 @@ class DataController(BaseController):
     
     def get_clean_filename(self, orig_filename: str):
         # Remove special characters and spaces
-        clean_name = re.sub(r'[^\w]', '', orig_filename.strip())
+        clean_name = re.sub(r'[^\w.]', '', orig_filename.strip())
         clean_name = clean_name.replace(" ", "_")
         return clean_name
 
-    def generate_unique_filename(self, orig_filename: str, project_id: str):
-        random_filename = self.generate_random_string()
+    def generate_unique_filepath(self, orig_filename: str, project_id: str):
+        random_key = self.generate_random_string()
         project_path = ProjectController().get_project_path(project_id=project_id)
         clean_file_name = self.get_clean_filename(
             orig_filename=orig_filename
         )
 
+        full_file_name = random_key + "_" + clean_file_name 
+
         new_file_path = os.path.join(
             project_path,
-            random_filename + "_" + clean_file_name 
+            full_file_name
         )
 
         while os.path.exists(new_file_path):
             random_key = self.generate_random_string()
+            full_file_name = random_key + "_" + clean_file_name
             new_file_path = os.path.join(
                 project_path, 
-                random_key + "_" + clean_file_name
+                full_file_name
             )
         
-        return new_file_path
+        return new_file_path, full_file_name
