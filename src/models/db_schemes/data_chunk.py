@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from typing import Optional
 
 class DataChunk(BaseModel):
-    _id: Optional[ObjectId] = Field(None, alias="_id")
+    id: Optional[ObjectId] = Field(None, alias="_id")
     chunk_text: str = Field(..., min_length=1)
     chunk_metadata: dict 
     chunk_order: int = Field(..., gt=0)
