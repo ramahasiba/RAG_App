@@ -17,3 +17,6 @@ services:
 
 networks:
   backend:
+
+volumes:
+  mongodb:
