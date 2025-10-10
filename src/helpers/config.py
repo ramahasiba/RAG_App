@@ -27,6 +27,11 @@ class Settings(BaseSettings):
     INPUT_DEFAULT_MAX_CHARACTERS: int = 1024
     GENERATION_DEFAULT_MAX_TOKENS: int = 200
     GENERATION_DEFAULT_TEMPRATURE: float = 0.1
+    
+    # ---------- Vector DB Config ----------
+    VECTOR_DB_BACKEND: str = "QDRANT"
+    VECTOR_DB_PATH: str = "qdrant_db"
+    VECTOR_DB_DISTANCE_METHOD: str = "COSINE" 
 
     class Config:
         env_file = ".env"
