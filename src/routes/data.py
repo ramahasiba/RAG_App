@@ -20,7 +20,7 @@ data_router = APIRouter()
 async def upload_data(request: Request, project_id: str, file: UploadFile,
                       app_settings: Settings = Depends(get_settings)):
     
-    project_model = ProjectModel.create_instance(
+    project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
     )
 
@@ -42,7 +42,6 @@ async def upload_data(request: Request, project_id: str, file: UploadFile,
             }
         )
     
-    # project_dir_path = ProjectController().get_project_path(project_id=project_id)
     file_path, file_id = data_controller.generate_unique_filepath(
         orig_filename=file.filename,
         project_id=project_id
@@ -118,13 +117,14 @@ async def process_endpoint(request: Request, project_id: str, process_request: P
             return JSONResponse(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 content={
-                    "signal": ResponseSignal.FILE_ID_ERROR.vlaue
+                    "signal": ResponseSignal.FILE_ID_ERROR.value
                 }
             )
             
         project_files_ids = {
             asset_record.id: asset_record.asset_name
         }
+        
     else: 
         project_files = await asset_model.get_all_project_assets(
             asset_project_id=project.id,
@@ -173,11 +173,11 @@ async def process_endpoint(request: Request, project_id: str, process_request: P
     
         file_chunks_records = [
             DataChunk(
-                cuhnk_text=chunk.page_content,
+                chunk_text=chunk.page_content,
                 chunk_metadata=chunk.metadata,
                 chunk_order=i+1,
                 chunk_project_id=project.id,
-                chunk_aseet_id=asset_id
+                chunk_asset_id=asset_id
                 )
             for i, chunk in enumerate(file_chunks)
         ]

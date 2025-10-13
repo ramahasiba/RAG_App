@@ -53,31 +53,3 @@ class AssetModel(BaseDataModel):
             return Asset(**record)
         
         return None
-
-
-    # async def get_asset(self, asset_id: str):
-    #     result = await self.collection.find_one({
-    #         "_id": ObjectId(asset_id)
-    #     })
-
-    #     if result is None:
-    #         return None
-
-    #     return Asset(**result)
-    
-    # async def insert_many_assets(self, assets: list, batch_size: int=100):
-    #     for i in range(0, len(assets), batch_size):
-    #         batch = assets[i: i+batch_size]
-    #         operations = [
-    #             InsertOne(asset.model_dump(by_alias=True, exclude_unset=True))
-    #             for asset in batch
-    #         ]
-    #         await self.collection.bulk_write(operations)
-
-    #     return len(assets)
-    
-    # async def delete_assets_by_project_id(self, project_id: ObjectId):
-    #     result = await self.collection.delete_many({
-    #         "asset_project_id": project_id
-    #     })
-    

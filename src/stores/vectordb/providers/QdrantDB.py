@@ -12,7 +12,7 @@ class QdrantDB(VectorDBInterface):
 
         if distance_method == DistanceMethodEnums.COSINE.value:
             self.distance_method = models.Distance.COSINE
-        elif distance_method == DistanceMethodEnums.DOT.value:
+        elif distance_method == DistanceMethodEnums.DOT_PRODUCT.value:
             self.distance_method = models.Distance.DOT
 
         self.logger = logging.getLogger(__name__)
