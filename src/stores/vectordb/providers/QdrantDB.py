@@ -8,7 +8,7 @@ class QdrantDB(VectorDBInterface):
     def __init__(self, db_path: str, distance_method: str):
         self.db_path = db_path
         self.client = None 
-        self.distance_method = None
+        self.distance_method = models.Distance.COSINE
 
         if distance_method == DistanceMethodEnums.COSINE.value:
             self.distance_method = models.Distance.COSINE
@@ -43,6 +43,7 @@ class QdrantDB(VectorDBInterface):
             _ = self.delete_collection(collection_name=collection_name)
         
         if not self.is_collection_existed(collection_name):
+            print("embedding info:", embedding_size, self.distance_method)
             _ = self.client.create_collection(
                 collection_name=collection_name,
                 vectors_config=models.VectorParams(
@@ -67,6 +68,7 @@ class QdrantDB(VectorDBInterface):
                 collection_name=collection_name,
                 records=[
                     models.Record(
+                        id=[record_id],
                         vector=vector,
                         payload={
                             "text": text,
@@ -82,13 +84,13 @@ class QdrantDB(VectorDBInterface):
         return True
     
 
-    def inser_many(self, collection_name: str, texts: List, vectors: List,
+    def insert_many(self, collection_name: str, texts: List, vectors: List,
                    metadatas: List = None,
                    record_ids: List = None,
                    batch_size: int = 50):
         
         if metadatas is None:
-            metadata = [None] * len(texts)
+            metadatas = [None] * len(texts)
             
         if record_ids is None:
             record_ids = [None] * len(texts)
@@ -98,9 +100,11 @@ class QdrantDB(VectorDBInterface):
 
             batch_texts = texts[i: batch_end]
             batch_vectors = vectors[i: batch_end]
-            batch_metadatas = metadatas[i: batch_end] 
+            batch_metadatas = metadatas[i: batch_end]
+            batch_record_ids = record_ids[i: batch_end]
             batch_records = [
-                models.Record( 
+                models.Record(
+                    id=batch_record_ids[x], 
                     vector=batch_vectors[x],
                     payload={
                         "text": batch_texts[x],

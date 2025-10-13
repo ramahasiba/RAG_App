@@ -46,3 +46,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(base_router)
 app.include_router(data_router)
 app.include_router(nlp_router)
+
+@app.get("/health", tags=["Health"])
+async def health_check():
+    return {"status": "ok"}

@@ -78,7 +78,7 @@ class CohereProvider(LLMInterface):
         
         response = self.client.embed(
             model = self.embedding_model_id,
-            text = [text],
+            texts = [text],
             input_type = input_type,
         )
 
@@ -93,4 +93,4 @@ class CohereProvider(LLMInterface):
             self.logger.error("Error while embedding text with Cohere") 
             return None
         
-        return response.embeddings.float_[0] 
+        return response.embeddings.float_[0]
