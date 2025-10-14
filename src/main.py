@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from routes.base import base_router
 from routes.data import data_router
+from routes.nlp import nlp_router
 from helpers.config import get_settings, Settings
 from motor.motor_asyncio import AsyncIOMotorClient
 from contextlib import asynccontextmanager
@@ -44,3 +45,8 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(base_router)
 app.include_router(data_router)
+app.include_router(nlp_router)
+
+@app.get("/health", tags=["Health"])
+async def health_check():
+    return {"status": "ok"}

@@ -2,3 +2,4 @@ from .DataController import DataController
 from .ProcessController import ProcessController
 from .ProjectController import ProjectController
 from .BaseController import BaseController
+from .NLPController import NLPController
