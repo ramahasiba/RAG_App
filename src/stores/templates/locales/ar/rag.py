@@ -3,7 +3,7 @@ from string import Template
 
 # التوجيه العام للنظام (System Prompt)
 
-system_prompt = """
+system_prompt = Template("""
     أنت مساعد لتوليد إجابة للمستخدم.
 
     سيتم تزويدك بمجموعة من الوثائق المرتبطة باستفسار المستخدم.
@@ -19,7 +19,7 @@ system_prompt = """
     كن مهذباً ولطيفاً مع المستخدم.
 
     كن دقيقاً وموجزاً في إجابتك وتجنب المعلومات غير الضرورية.
-    """
+    """)
 
 # قالب الوثيقة (Document Prompt)
 document_prompt = Template("""

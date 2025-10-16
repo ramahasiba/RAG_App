@@ -3,7 +3,7 @@ from string import Template
 
 # System Prompt
 
-system_prompt = """
+system_prompt = Template("""
     You are an assistant to generate a response for the user.
 
     You will be provided by a set of documents associated with the user's query.
@@ -20,7 +20,7 @@ system_prompt = """
 
     Be precise and concise in your response. Avoid unnecessary information.
 
-    """
+    """)
 
 # Document
 document_prompt = Template("""
