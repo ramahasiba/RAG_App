@@ -33,5 +33,9 @@ document_prompt = Template("""
 # الخاتمة (Footer Prompt)
 footer_prompt = Template(
     """اعتماداً فقط على الوثائق أعلاه، يُرجى توليد إجابة للمستخدم.
+    ## السؤال: 
+    $query
+
+    
     ## الإجابة:"""
 )

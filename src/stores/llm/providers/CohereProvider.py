@@ -7,12 +7,12 @@ class CohereProvider(LLMInterface):
     def __init__(self, api_key: str, 
                  default_input_max_characters: int=3000, 
                  default_max_output_tokens: int=3000,
-                 default_generation_temprature: float=0.1):
+                 default_generation_temperature: float=0.1):
         
         self.api_key = api_key 
         self.default_input_max_characters = default_input_max_characters
         self.default_max_output_tokens = default_max_output_tokens
-        self.default_generation_temprature = default_generation_temprature 
+        self.default_generation_temperature = default_generation_temperature 
         
         self.generation_model_id = None
         self.embedding_model_id = None
@@ -38,7 +38,7 @@ class CohereProvider(LLMInterface):
             "content": self.process_text(prompt)
         } 
     
-    def generate_text(self, prompt: str, chat_history: list=[], max_output_token: int=None, temprature: float=None):
+    def generate_text(self, prompt: str, chat_history: list=[], max_output_token: int=None, temperature: float=None):
         if not self.client:
             self.logger.error("Cohere client was not set")
             return None
@@ -47,14 +47,14 @@ class CohereProvider(LLMInterface):
             self.logger.error("generation model id for cohere was not found")
             return None
         
-        max_output_tokens = max_output_tokens if max_output_tokens is not None else self.default_max_output_tokens
-        temprature = temprature if temprature else self.default_generation_temprature
+        max_output_token = max_output_token if max_output_token is not None else self.default_max_output_tokens
+        temperature = temperature if temperature else self.default_generation_temperature
          
         response = self.client.chat(
             model=self.generation_model_id,
             chat_history = chat_history,
             message = self.process_text(prompt),
-            temprature=temprature,
+            temperature=temperature,
             max_tokens=max_output_token
         )
 

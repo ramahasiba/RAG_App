@@ -1,4 +1,5 @@
 import os 
+import importlib
 
 class TemplateParser:
 
@@ -34,8 +35,10 @@ class TemplateParser:
         if not os.path.exists(group_path):
             return None
         
+        path = "stores.templates.locales."+targeted_language+"."+group
+        
         # import group module
-        module = __import__(f"stores.llm.templates.locales.{targeted_language}.{group}", fromlist=[{group}])
+        module = importlib.__import__(path, fromlist=[{group}])
 
         if not module:
             return None
