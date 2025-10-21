@@ -21,18 +21,21 @@ class OpenAIProvider(LLMInterface):
         self.embedding_size = None
         self.client = OpenAI(
             api_key = self.api_key,
-            # base_url = self.api_url if self.api_url and len(self.api_url) else None
+            base_url = self.api_url if self.api_url and len(self.api_url) else None
         )
 
         self.enums = OpenAIEnums 
         self.logger = logging.getLogger(__name__) 
 
+
     def set_generation_model(self, model_id: str):
         self.generation_model_id = model_id
+
 
     def set_embedding_model(self, model_id: str, embedding_size: str):
         self.embedding_model_id = model_id
         self.embedding_size = embedding_size
+
 
     def generate_text(self, prompt: str, chat_history: list=[], max_output_token: int=None, temperature: float=None):
         if not self.client:
@@ -68,6 +71,8 @@ class OpenAIProvider(LLMInterface):
             return None
         
         return response.choices[0].message.content
+    
+
     def embed_text(self, text: str, document_type: str=None):
         if not self.client:
             self.logger.error("OpenAI client was not set")
@@ -88,9 +93,11 @@ class OpenAIProvider(LLMInterface):
         
         return response.data[0].embedding
      
+     
     def process_text(self, text: str):
         return text[: self.default_input_max_characters].strip()
-        
+
+
     def construct_prompt(self, prompt: str, role: str):
         return {
             "role": role,
