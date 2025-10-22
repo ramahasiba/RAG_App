@@ -7,6 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from contextlib import asynccontextmanager
 from stores.llm.LLMProviderFactory import LLMProviderFactory
 from stores.vectordb.VectorDBProviderFactory import VectorDBProviderFactory
+from stores.templates.template_parser import TemplateParser
 
 app = FastAPI()
 
@@ -36,6 +37,9 @@ async def lifespan(app: FastAPI):
         provider=settings.VECTOR_DB_BACKEND
     )
     app.vectordb_client.connect()
+    app.template_parser = TemplateParser(
+        language=settings.DEFAULT_LANG
+    )
     
     yield
     app.mongo_conn.close()
