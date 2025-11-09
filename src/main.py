@@ -2,8 +2,7 @@ from fastapi import FastAPI
 from routes.base import base_router
 from routes.data import data_router
 from routes.nlp import nlp_router
-from helpers.config import get_settings, Settings
-from motor.motor_asyncio import AsyncIOMotorClient
+from helpers.config import get_settings, Settings 
 from contextlib import asynccontextmanager
 from stores.llm.LLMProviderFactory import LLMProviderFactory
 from stores.vectordb.VectorDBProviderFactory import VectorDBProviderFactory
