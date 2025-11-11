@@ -104,7 +104,7 @@ class NLPController(BaseController):
                 "rag", 
                 "document_prompt", {
                     "doc_no": idx + 1,
-                    "document_content": doc.text,
+                    "document_content": self.generation_client.process_text(doc.text),
                 }
             ) 
             for idx, doc in enumerate(retrieved_docs) 
