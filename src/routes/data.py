@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, UploadFile, status
+from fastapi import APIRouter, Depends, UploadFile, status, File
 from fastapi.responses import JSONResponse
 from fastapi import Request
 from helpers.config import get_settings, Settings
@@ -117,7 +117,7 @@ async def process_endpoint(
             asset_project_id=project.project_id, asset_type=AssetTypeEnum.FILE.value
         )
         project_files_ids = {
-            record.asset_project_id: record.asset_name for record in project_files
+            record.asset_id: record.asset_name for record in project_files
         }
 
     if len(project_files_ids) == 0:
@@ -162,7 +162,7 @@ async def process_endpoint(
                 chunk_text=chunk.page_content,
                 chunk_metadata=chunk.metadata,
                 chunk_order=i + 1,
-                chunk_project_id=project,
+                chunk_project_id=project.project_id,
                 chunk_asset_id=asset_id,
             )
             for i, chunk in enumerate(file_chunks)
